@@ -10,9 +10,9 @@ from sklearn.preprocessing import StandardScaler
 import webbrowser
 from threading import Timer
 
-CORS(app)
-
 app = Flask(__name__)
+
+CORS(app)
 
 # Database configuration
 db_config = {
