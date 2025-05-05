@@ -54,15 +54,15 @@ def get_db_connection():
         return None
 
 def fetch_latest_sensor_data(hours=24):
-    """Fetch latest sensor data with time range"""
+    """Fetch latest sensor data with time range from weather_data table"""
     connection = get_db_connection()
     if not connection:
         return None
     
     try:
         query = """
-        SELECT temperature, humidity, pressure as air_pressure, lux as light_intensity, wind_speed, timestamp 
-        FROM sensor_data 
+        SELECT temperature, humidity, pressure, wind_speed, timestamp 
+        FROM weather_data 
         ORDER BY timestamp DESC 
         LIMIT %s
         """
@@ -110,12 +110,11 @@ def get_weather_prediction():
         last_day = data.iloc[-1]
         next_day_timestamp = last_day['timestamp'] + timedelta(days=1)
         
-        # Prepare data for prediction
+        # Prepare data for prediction (without light_intensity)
         last_day_data = {
             'temperature': last_day['temperature'],
             'humidity': last_day['humidity'],
-            'air_pressure': last_day['air_pressure'],
-            'light_intensity': last_day['light_intensity'],
+            'air_pressure': last_day['pressure'],  # Changed from 'air_pressure' to 'pressure'
             'wind_speed': last_day['wind_speed'],
             'timestamp': next_day_timestamp
         }
@@ -138,8 +137,7 @@ def get_weather_prediction():
             'features': {
                 'temperature': last_day['temperature'],
                 'humidity': last_day['humidity'],
-                'air_pressure': last_day['air_pressure'],
-                'light_intensity': last_day['light_intensity'],
+                'pressure': last_day['pressure'],
                 'wind_speed': last_day['wind_speed']
             }
         }
