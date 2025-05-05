@@ -196,33 +196,6 @@ def health_check():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/debug/files')
-def debug_files():
-    try:
-        import os
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        files = {
-            "current_directory": current_dir,
-            "files": [],
-            "weather_model_exists": False,
-            "weather_model_path": os.path.join(current_dir, 'weather_model.pkl')
-        }
-        
-        for item in os.listdir(current_dir):
-            item_path = os.path.join(current_dir, item)
-            files["files"].append({
-                "name": item,
-                "is_file": os.path.isfile(item_path),
-                "size": f"{os.path.getsize(item_path)/(1024*1024):.2f} MB" if os.path.isfile(item_path) else None
-            })
-            
-            if item == 'weather_model.pkl':
-                files["weather_model_exists"] = True
-                
-        return jsonify(files)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
