@@ -35,7 +35,9 @@ def load_weather_model():
         return model_data['model'], model_data['scaler'], model_data['features']
         
     except Exception as e:
+        import traceback
         print(f"Error loading model: {str(e)}")  # Debug error details
+        traceback.print_exc()
         return None, None, None
 
 model, scaler, features = load_weather_model()
