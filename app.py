@@ -135,8 +135,27 @@ def get_weather_prediction():
 
 @app.route('/')
 def index():
-    prediction = get_weather_prediction()
-    return render_template('index.html', prediction=prediction)
+    try:
+        # Debug: Cetak status koneksi database
+        print("Attempting to connect to database...")
+        connection = get_db_connection()
+        if connection:
+            print("Database connection successful")
+            connection.close()
+        else:
+            print("Database connection failed")
+
+        # Debug: Cetak status model
+        print(f"Model loaded: {model is not None}")
+        print(f"Scaler loaded: {scaler is not None}")
+        
+        prediction = get_weather_prediction()
+        print(f"Prediction result: {prediction}")  # Debug prediction
+        
+        return render_template('index.html', prediction=prediction)
+    except Exception as e:
+        print(f"Error in index route: {str(e)}")
+        return render_template('error.html', error=str(e))
 
 @app.route('/api/predict', methods=['GET'])
 def api_predict():
