@@ -23,10 +23,19 @@ db_config = {
 # Load the trained model
 def load_weather_model():
     try:
-        model_data = joblib.load('weather_model.pkl')
+        model_path = os.path.join(os.path.dirname(__file__), 'weather_model.pkl')
+        print(f"Attempting to load model from: {model_path}")  # Debug path
+        
+        if not os.path.exists(model_path):
+            print("Error: Model file not found!")  # Debug file existence
+            return None, None, None
+            
+        model_data = joblib.load(model_path)
+        print("Model loaded successfully!")  # Debug load success
         return model_data['model'], model_data['scaler'], model_data['features']
+        
     except Exception as e:
-        print(f"Error loading model: {e}")
+        print(f"Error loading model: {str(e)}")  # Debug error details
         return None, None, None
 
 model, scaler, features = load_weather_model()
