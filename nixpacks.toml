@@ -2,7 +2,7 @@
 nix_pkgs = ["gcc", "libffi", "openssl", "zlib", "python3Distutils", "python3-venv"]
 
 [phases.install]
-cmd = "pip install --upgrade pip && pip install -r requirements.txt"
+cmd = "pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt"
 
 [start]
 cmd = "gunicorn app:app"
