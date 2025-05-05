@@ -12,10 +12,10 @@ app = Flask(__name__)
 
 # Database configuration
 db_config = {
-    'host': '153.92.13.207',
-    'user': 'u346812618_kel2',
-    'password': 'M0nitorcuaca65!',
-    'database': 'u346812618_monitor_cuaca',
+    'host': os.getenv('DB_HOST'),
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASS'),
+    'database': os.getenv('DB_NAME'),
     'cursorclass': pymysql.cursors.DictCursor
 }
 
