@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
 import pymysql
 import os
 from datetime import datetime, timedelta
@@ -8,6 +9,8 @@ import joblib
 from sklearn.preprocessing import StandardScaler
 import webbrowser
 from threading import Timer
+
+CORS(app)
 
 app = Flask(__name__)
 
