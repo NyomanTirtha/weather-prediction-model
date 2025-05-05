@@ -1,5 +1,5 @@
 [phases.setup]
-nix_pkgs = ["gcc", "libffi", "openssl", "zlib"]
+nix_pkgs = ["gcc", "libffi", "openssl", "zlib", "python3Distutils"]
 
 [start]
 cmd = "gunicorn app:app"
